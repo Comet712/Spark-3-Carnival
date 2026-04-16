@@ -1,14 +1,14 @@
 # Spark 3 Carnival Mod
 Mod for the Steam version of Spark the Electric Jester 3.
 
-##Features:
+## Features:
 
 • Companion version of Spark that follows you around in stages.
 
 Source code is included in this repository — you can verify exactly what the mod does before running it.
 
 
-##Installation
+## Installation
   > Only works on the Steam version of Spark 3.
 
 1. Download BepInEx 5 from its official github source. *(Use BepInEx 5 at your own risk, I make no warranty about it)*
