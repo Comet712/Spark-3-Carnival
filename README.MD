@@ -7,6 +7,8 @@ Features:
 
 Source code is included in this repository — you can verify exactly what the mod does before running it.
 
+
+
 HOW TO PLAY: (only works on Steam version of Spark 3)
 
 1. Download BepInEx 5 from its official github source. (Use BepInEx 5 at your own risk, I make no warranty about it)
@@ -16,6 +18,8 @@ HOW TO PLAY: (only works on Steam version of Spark 3)
 5. Run the game
 
 
+
+If building from source, you'll need to update the reference paths in CarnivalMod.csproj to match your own game install location.
 
 
 Use "Spark 3 Carnival" at your own risk, no warranty.
