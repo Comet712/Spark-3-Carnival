@@ -15,7 +15,7 @@ Source code is included in this repository — you can verify exactly what the m
 1. Download BepInEx 5 from its official github source. *(Use BepInEx 5 at your own risk, I make no warranty about it)*
 2. Extract BepInEx into your Spark 3 folder (next to the .exe)
 3. Run the game once and close it — this lets BepInEx set itself up
-4. Download CarnivalMod.dll, put it in \Spark the Electric Jester 3\BepInEx\plugins\
+4. Download CarnivalMod.dll from Releases, put it in \Spark the Electric Jester 3\BepInEx\plugins\
 5. Run the game
 
 
