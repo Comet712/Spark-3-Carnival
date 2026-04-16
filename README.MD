@@ -7,7 +7,6 @@ Mod for the Steam version of Spark the Electric Jester 3.
 
 Source code is included in this repository — you can verify exactly what the mod does before running it.
 
-
 ## Installation
   > Only works on the Steam version of Spark 3.
 
