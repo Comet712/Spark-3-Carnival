@@ -36,7 +36,7 @@ Carnival Score = Score * (20% penalty per hit) * (10% time penalty per 10 second
 
 
 
-**Building from source**: You'll need to update the reference paths in CarnivalMod.csproj to match your own game install location.
+**If building from source**: You'll need to update the reference paths in CarnivalMod.csproj to match your own game install location.
 
 ## Disclaimers
 Use "Spark 3 Carnival" at your own risk, no warranty.
