@@ -39,8 +39,9 @@ namespace CarnivalMod
             companion.AddComponent<Rigidbody>();
             companion.AddComponent<CompanionController>();
 
-            // Carnival Score tracker — separate GameObject, lives for the duration of the stage
+            // Carnival Score tracker — must survive sub-scene reloads
             GameObject scoreTracker = new GameObject("CarnivalScoreTracker");
+            Object.DontDestroyOnLoad(scoreTracker);
             scoreTracker.AddComponent<CarnivalScoreTracker>();
 
             Plugin.Log.LogInfo("Companion spawned successfully!");

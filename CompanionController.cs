@@ -25,8 +25,12 @@ namespace CarnivalMod
         private const float StuckHeightThreshold = 1.5f;
         private const int   MaxStuckJumps        = 3;
 
-        // Companion always shows Spark regardless of what the player equips.
-        private const int CompanionCharIndex = 0;
+        // Companion character index — changes based on what the player has equipped.
+        // Float (2) or Fark (3) player  → companion is Spark (0)
+        // Any other player              → companion is Float (2)
+        // Starts as Float so the default Spark player has a Float companion.
+        private int _companionCharIndex  = 2;
+        private int _lastPlayerCharIndex = -1;
 
         private Rigidbody     _rb;
         private PlayerBhysics _player;
@@ -76,8 +80,31 @@ namespace CarnivalMod
                 Plugin.Log.LogWarning("[CarnivalMod] PlayerBhysics not found on Start — will retry.");
         }
 
+        private static int GetDesiredCompanionChar(int playerChar)
+        {
+            // Float (2) or Fark (3) player → show Spark companion
+            // Everyone else                → show Float companion
+            return (playerChar == 2 || playerChar == 3) ? 0 : 2;
+        }
+
         private void Update()
         {
+            // Detect player character changes and swap companion model if needed
+            if (_modelAttached)
+            {
+                int playerChar = CharacterAnimatorChange.Character;
+                if (playerChar != _lastPlayerCharIndex)
+                {
+                    _lastPlayerCharIndex = playerChar;
+                    int desired = GetDesiredCompanionChar(playerChar);
+                    if (desired != _companionCharIndex)
+                    {
+                        _companionCharIndex = desired;
+                        DetachModel();
+                    }
+                }
+            }
+
             if (!_modelAttached)
                 TryAttachModel();
             else
@@ -182,7 +209,7 @@ namespace CarnivalMod
             {
                 transform.position = _player.transform.position
                     - _player.transform.forward * 8f
-                    + Vector3.up * 12f;
+                    + Vector3.up * 17f;
                 _rb.velocity = Vector3.zero;
                 ResetStuck();
             }
@@ -399,17 +426,24 @@ namespace CarnivalMod
             var skin = charChange.Skins[charIndex];
             if (skin == null) return null;
 
-            SkinnedMeshRenderer smr = skin.GetComponentInChildren<SkinnedMeshRenderer>();
+            // includeInactive=true so we find the SMR even when this character's skin
+            // is currently hidden (the player is using a different character).
+            SkinnedMeshRenderer smr = skin.GetComponentInChildren<SkinnedMeshRenderer>(true);
             if (smr == null)
             {
-                foreach (var s in charChange.GetComponentsInChildren<SkinnedMeshRenderer>())
-                    if (s.gameObject.activeInHierarchy) { smr = s; break; }
+                foreach (var s in charChange.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+                { smr = s; break; }
             }
             if (smr == null) return null;
 
             Transform root = smr.rootBone ?? (smr.bones.Length > 0 ? smr.bones[0] : null);
             if (root == null) return null;
-            while (root.parent != null && root.parent != charChange.transform)
+            // Stop when we reach the skin object itself OR when the parent is charChange.
+            // Without the skin.transform guard, inactive skins (parented inside SkinRep)
+            // cause the walk to overshoot up to SkinRep instead of the character's model root.
+            while (root.parent != null
+                   && root != skin.transform
+                   && root.parent != charChange.transform)
                 root = root.parent;
             return root;
         }
@@ -419,10 +453,10 @@ namespace CarnivalMod
             var charChange = CharacterAnimatorChange.StaticReference;
             if (charChange == null) return;
 
-            Transform boneRoot = FindBoneRoot(charChange, CompanionCharIndex);
+            Transform boneRoot = FindBoneRoot(charChange, _companionCharIndex);
             if (boneRoot == null)
             {
-                Plugin.Log.LogWarning("[CarnivalMod] Spark bone root not found.");
+                Plugin.Log.LogWarning($"[CarnivalMod] Bone root not found for charIndex={_companionCharIndex}.");
                 _modelAttached = true;
                 return;
             }
@@ -444,16 +478,28 @@ namespace CarnivalMod
             boneRootCopy.transform.localPosition = Vector3.zero;
             boneRootCopy.transform.localRotation = Quaternion.identity;
             boneRootCopy.transform.localScale    = boneRoot.lossyScale * ModelScale;
+            boneRootCopy.SetActive(true);  // may have been cloned from an inactive (hidden) skin
 
             var boneMap = new Dictionary<Transform, Transform>();
             BuildBoneMap(boneRoot, boneRootCopy.transform, boneMap);
 
-            bool skinInsideBoneRoot = boneRoot.GetComponentInChildren<SkinnedMeshRenderer>() != null;
+            bool skinInsideBoneRoot = boneRoot.GetComponentInChildren<SkinnedMeshRenderer>(true) != null;
             Plugin.Log.LogInfo($"[CarnivalMod] boneRoot={boneRoot.name} skinInside={skinInsideBoneRoot}");
+
+            // Remove Float's sword objects from the clone — they're part of her bone hierarchy
+            // but the companion shouldn't have them equipped by default.
+            if (_companionCharIndex == 2)
+            {
+                foreach (var swordName in new[] { "FloatSword_L", "FloatSword_RB" })
+                {
+                    var t = boneRootCopy.transform.Find(swordName);
+                    if (t != null) Object.Destroy(t.gameObject);
+                }
+            }
 
             if (!skinInsideBoneRoot)
             {
-                var activeSkin = charChange.Skins[CompanionCharIndex];
+                var activeSkin = charChange.Skins[_companionCharIndex];
                 GameObject skinCopy = Object.Instantiate(activeSkin);
                 skinCopy.SetActive(true);
                 skinCopy.transform.SetParent(animRoot.transform);
@@ -480,13 +526,13 @@ namespace CarnivalMod
             var srcAnim = charChange.GetComponent<Animator>();
             _companionAnimator = animRoot.AddComponent<Animator>();
             _companionAnimator.runtimeAnimatorController = srcAnim.runtimeAnimatorController;
-            _companionAnimator.avatar       = charChange.CharacterAvatar[CompanionCharIndex];
+            _companionAnimator.avatar       = charChange.CharacterAvatar[_companionCharIndex];
             _companionAnimator.cullingMode  = AnimatorCullingMode.AlwaysAnimate;
             _companionAnimator.updateMode   = AnimatorUpdateMode.Normal;
             _companionAnimator.Rebind();
 
             // Seed all params before Play() so the state machine starts in the right place
-            _companionAnimator.SetInteger("Character",   CompanionCharIndex);
+            _companionAnimator.SetInteger("Character",   _companionCharIndex);
             _companionAnimator.SetInteger("Action",      0);
             _companionAnimator.SetBool   ("Grounded",    true);
             _companionAnimator.SetFloat  ("SpeedMagXZ",  0f);
@@ -500,17 +546,23 @@ namespace CarnivalMod
             _companionAnimator.SetBool   ("isRolling",   false);
             _companionAnimator.SetBool   ("FallingFast", false);
 
-            // Spark uses layer 0 only — all extra layers at zero weight
+            // Layer weights per character (section 2 of animation_and_model_reference.txt):
+            //   Spark (0): all extra layers = 0
+            //   Float (2): layer 2 = 1, all others = 0
             for (int i = 1; i <= 13; i++)
                 _companionAnimator.SetLayerWeight(i, 0f);
+            if (_companionCharIndex == 2)
+                _companionAnimator.SetLayerWeight(2, 1f);
 
             _companionAnimator.Play("[00] Grounded Idle", 0, 0f);
 
             _modelRoot     = animRoot;
             _modelAttached = true;
             _wasGrounded   = true;
+            _lastPlayerCharIndex = CharacterAnimatorChange.Character;
 
-            Plugin.Log.LogInfo("[CarnivalMod] Spark companion attached with independent Animator.");
+            string charName = _companionCharIndex == 0 ? "Spark" : "Float";
+            Plugin.Log.LogInfo($"[CarnivalMod] Companion attached as {charName} (index={_companionCharIndex}).");
         }
 
         private void RemapBones(SkinnedMeshRenderer smr, Dictionary<Transform, Transform> boneMap)
