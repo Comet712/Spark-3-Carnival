@@ -1,15 +1,18 @@
 # Spark 3 Carnival Mod
 Mod for the Steam version of Spark the Electric Jester 3. Installation instructions below.
 
-## Features:
+## Feature: Companion
 
 • Companion version of Spark that follows you around in stages.
+• Switched between Spark and Float naturally, depending on who you play.
 
 Source code is included in this repository — you can verify exactly what the mod does before running it.
 
 ![Playing as Float, Spark follows her](Spark3.JPG)
 
-• Carnival Score: Tracks how well you play overall, shown in top right. Encorages some exploration, while making every Bit count. Soft time limit of Gold Time + 60 seconds.
+## Feature: Carnival Score
+
+• Tracks how well you play overall, shown in top right. Encorages some exploration, while making every Bit count. Soft time limit of Gold Time + 60 seconds.
 
 Carnival Score = Score X (20% penalty per hit) X (10% time penalty per 10 seconds over)
 
