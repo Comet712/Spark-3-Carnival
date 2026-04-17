@@ -13,13 +13,13 @@ Feature: Companion
 
 ## Feature: Carnival Score
 
-• Tracks how well you play overall. Shown in the pictures below (top right). Encorages some exploration, while making every Bit count. Soft time limit of Gold Time + 60 seconds.
+• Tracks how well you play overall. Shown in the pictures below (top right). Encourages some exploration, while making every Bit count. Soft time limit of Gold Time + 60 seconds.
 
 Carnival Score = Score * (20% penalty per hit) * (10% penalty per 10 seconds over time)
 
 ![Float riding a rail](Carnival1.png)
 
-*Adds replay value to stages; Encorages you to try new routes to find hidden goodies and boost score. Makes you get better at the game, since you can't damage-boost through hazards easily.*
+*Adds replay value to stages; Encourages you to try new routes to find hidden goodies and boost score. Makes you get better at the game, since you can't damage-boost through hazards easily.*
 
 ![Float and Spark running towards Bits](Carnival2.png)
 
@@ -32,7 +32,7 @@ Carnival Score = Score * (20% penalty per hit) * (10% penalty per 10 seconds ove
 ## Installation
   > Only works on the Steam version of Spark 3.
 
-1. Download BepInEx 5 from its official github source. *(Use BepInEx 5 at your own risk, I make no warranty about it)*
+1. Download BepInEx 5 from its official GitHub source. *(Use BepInEx 5 at your own risk, I make no warranty about it)*
 2. Extract BepInEx into your Spark 3 folder (next to the .exe)
 3. Run the game once and close it — this lets BepInEx set itself up
 4. Download CarnivalMod.dll from Releases, put it in \Spark the Electric Jester 3\BepInEx\plugins\
