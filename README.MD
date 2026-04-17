@@ -20,7 +20,7 @@ Carnival Score = Score * (20% penalty per hit) * (10% time penalty per 10 second
 ![Float riding a rail](Carnival1.png)
 ![Float and Spark running towards Bits](Carnival2.png)
 
-*General Carnival strategy: Get yellow bit capsules and small bits to increase multiplier. Green score capsules and yellow bit capsules are worth a lot. Enemy kills add up a lot too.*
+*General Carnival strategy: Get yellow capsules and small bits to increase multiplier. Green score capsules and yellow capsules are worth a lot. Enemy kills add up too.*
 
 ![Float jumping for a yellow Bit capsule](Carnival3.png)
 
