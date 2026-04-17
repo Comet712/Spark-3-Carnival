@@ -1,6 +1,7 @@
 # Spark 3 Carnival Mod
 
-Mod for the <ins>Steam version</ins> of Spark the Electric Jester 3. Install instructions below.
+Mod for the <ins>Steam version</ins> of Spark the Electric Jester 3. <ins>Install instructions below.</ins>
+
 
 ## Feature: Companion
 
