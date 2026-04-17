@@ -18,6 +18,9 @@ Feature: Companion
 Carnival Score = Score * (20% penalty per hit) * (10% penalty per 10 seconds over time)
 
 ![Float riding a rail](Carnival1.png)
+
+*Adds replay value to stages; Encorages you to try new routes to find hidden goodies and boost score. Makes you get better at the game, since you can't damage-boost through hazards easily.*
+
 ![Float and Spark running towards Bits](Carnival2.png)
 
 *General Carnival strategy: Get yellow capsules and small bits to increase multiplier. Green score capsules and yellow capsules are worth a lot. Enemy kills add up too.*
