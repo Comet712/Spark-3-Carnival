@@ -13,7 +13,7 @@ Feature: Companion
 
 ## Feature: Carnival Score
 
-• Tracks how well you play overall, shown in top right. Encorages some exploration, while making every Bit count. Soft time limit of Gold Time + 60 seconds.
+• Tracks how well you play overall, shown in the pictures below (top right). Encorages some exploration, while making every Bit count. Soft time limit of Gold Time + 60 seconds.
 
 Carnival Score = Score * (20% penalty per hit) * (10% penalty per 10 seconds over time)
 
