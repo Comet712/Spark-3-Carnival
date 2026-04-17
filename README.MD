@@ -5,7 +5,7 @@ Mod for the <ins>Steam version</ins> of Spark the Electric Jester 3. <ins>Instal
 Source code is included in this repository — you can verify exactly what the mod does before running it.
 
 
-## Feature: Companion
+Feature: Companion
 
 • Float or Spark follows you around in stages. They swap depending on who you play.
 
