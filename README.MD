@@ -27,6 +27,7 @@ Carnival Score = Score * (20% penalty per hit) * (10% penalty per 10 seconds ove
 
 ![Float jumping for a yellow Bit capsule](Carnival3.png)
 
+*Float has the longest jump in the game, especially by holding the button. She is generally recommended for Carnival Score.*
 
 ## Installation
   > Only works on the Steam version of Spark 3.
