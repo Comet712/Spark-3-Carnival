@@ -15,7 +15,7 @@ Feature: Companion
 
 • Tracks how well you play overall, shown in top right. Encorages some exploration, while making every Bit count. Soft time limit of Gold Time + 60 seconds.
 
-Carnival Score = Score * (20% penalty per hit) * (10% time penalty per 10 seconds over)
+Carnival Score = Score * (20% penalty per hit) * (10% time penalty per 10 seconds over time)
 
 ![Float riding a rail](Carnival1.png)
 ![Float and Spark running towards Bits](Carnival2.png)
