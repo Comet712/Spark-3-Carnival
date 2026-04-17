@@ -7,7 +7,7 @@ Source code is included in this repository — you can verify exactly what the m
 
 Feature: Companion
 
-• Float or Spark follows you around in stages. They swap depending on who you play.
+• Float or Spark follows you around in stages. They swap depending on who you play. Note: Not multiplayer.
 
 ![Playing as Float, Spark follows her](Spark3.JPG)
 
